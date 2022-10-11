@@ -1,6 +1,6 @@
 ﻿/*! 
  * Round Corners Customization v.0.0.4
- * Description: https://medium.com/@kefiijrw/illustrator-corner-rounding-7c485e7fed67
+ * https://github.com/kefiijrw/Round-Corners-Customization-for-Illustrator
  *
  * Author: Sergey Nikolaev
  * kefiijrw.com
@@ -115,49 +115,6 @@ function loc(vars) {
    else
       return vars.en;
 }
-
-
-// Open link. Taken from here: https://community.adobe.com/t5/indesign/js-scriptui-url-links-in-dialogues/td-p/4572773?page=1
-// TODO: remove or use
-function GotoLink(url) {
-
-   var body;
-
-   url = url || "https://medium.com/@kefiijrw/illustrator-corner-rounding-7c485e7fed67";
-
-   if (!/^http/.test('' + url)) {
-      url = 'https://' + url;
-   }
-
-   if (app.version > 6) {
-
-      if (File.fs == "Macintosh") {
-
-         body = 'tell application "Finder"\ropen location "' + url + '"\rend tell';
-         app.doScript(body, ScriptLanguage.APPLESCRIPT_LANGUAGE);
-
-      } else {
-
-         body = 'dim objShell\rset objShell = CreateObject("Shell.Application")\rstr = "' + url + '"\robjShell.ShellExecute str, "", "", "open", 1 ';
-         app.doScript(body, ScriptLanguage.VISUAL_BASIC);
-
-      }
-
-   }
-
-   else {
-
-      var linkBody = '<html><head><METaHTTP-EQUIV=Refresh CONTENT="0; URL=' + url + '"></head><body> <p></body></html>';
-      var linkJumper = File(Folder.temp.absoluteURI + "/link.html");
-      linkJumper.open("w");
-      linkJumper.write(linkBody);
-      linkJumper.close();
-      linkJumper.execute();
-
-   }
-
-}
-
 
 
 
