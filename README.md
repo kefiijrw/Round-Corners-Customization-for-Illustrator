@@ -8,7 +8,7 @@ The script changes the rude default rounding of corners — by simply inserting 
 
 ## Script features
 
-— Displaying the corner curvature profile for a better understanding of its shape:
+— Displaying the corner curvature profile (can be disabled) for a better understanding of its shape:
 
 ![2000 copy](https://user-images.githubusercontent.com/8041203/194973297-a08809bd-ad28-43dd-889d-b8a290c8583c.gif)
 
