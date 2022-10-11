@@ -33,3 +33,8 @@ Or just the selected corners:
 Or even many objects at once:
 
 ![2021-09-19 03 49 35](https://user-images.githubusercontent.com/8041203/194972959-0f1f1fa2-bd03-479b-84a9-173d6179a123.gif)
+
+
+Cheat sheet on the influence of coefficients on the rounding nature:
+
+![Artboard 2 copy](https://user-images.githubusercontent.com/8041203/194977549-5376af60-ca9c-43b3-87ea-1f95559773a8.png)
