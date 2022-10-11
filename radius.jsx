@@ -110,7 +110,7 @@ function roundOff(x) {
 
 // return the line in the right language, depending on the illustrator's locale
 function loc(vars) {
-   if (app.locale.indexOf('en_') == 0)
+   if (app.locale.indexOf('ru_') == 0)
       return vars.ru;
    else
       return vars.en;
