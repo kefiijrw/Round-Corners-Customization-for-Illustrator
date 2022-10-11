@@ -18,7 +18,10 @@ The script changes the rude default rounding of corners — by simply inserting 
 
 — Silent startup without a settings window to speed up work.
 
--------
+
+## How to use
+
+The script does not round corners by itself, but modifies already rounded corners. It modifies all corners that are selected when you run the script.
 
 The script can process all corners of an object at once:
 
