@@ -1,6 +1,6 @@
 # Round Corners Customization Script for Adobe Illustrator
 
-The script changes the rude default rounding of corners — by simply inserting fragments of circles — to a smooth one without sharp jumps in curvature. What's wrong with the standard rounding and much more about the script is explained in detail [in the article](https://medium.com/@kefiijrw/smooth-corner-rounding-in-adobe-illustrator-94003145a7bf).
+The script changes rude default rounding of corners — by simply inserting fragments of circles — to a smooth one without sharp jumps in curvature. What's wrong with the standard rounding and much more about the script is explained in detail [in the article](https://medium.com/@kefiijrw/smooth-corner-rounding-in-adobe-illustrator-94003145a7bf).
 
 ![slide_1-copy-------](https://user-images.githubusercontent.com/8041203/194974425-19fcffdd-2125-452f-9ce7-a5fa4c431016.gif)
 
