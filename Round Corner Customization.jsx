@@ -1,11 +1,11 @@
-﻿/*! 
- * Round Corners Customization v.0.0.4
+/*! 
+ * Round Corners Customization v.0.1.0
  * https://github.com/kefiijrw/Round-Corners-Customization-for-Illustrator
  *
  * Author: Sergey Nikolaev
  * kefiijrw.com
  *
- * Date: 2022-10-09
+ * Date: 2022-10-12
  *
  * 
  * CHANGELOG:
@@ -25,6 +25,10 @@
  * v.0.0.4
  * Option to hide the curvature profile is now avaible in the interface.
  * The language of the settings panel adjusts to the Illustrator locale.
+ * 
+ * v.0.1.0
+ * Public release
+ * The script file and the settings window title now have a more specific name.
  * 
  */
 
@@ -134,7 +138,7 @@ function init_configs() {
    echo('init_configs');
 
    //flag in the illustrator settings saying that the script has already been run before
-   var was = app.preferences.getIntegerPreference('radius_script_first_launch_already_was');
+   var was = app.preferences.getIntegerPreference('corner_smoothing_script_first_launch_already_was');
 
    if (was != 6) { //very dumb, sorry. it didn't work to save boolean so 6 is true and 2 is false
 
@@ -167,7 +171,7 @@ function init_configs() {
       from_vars_to_prefs();
 
       //remember that first launch was
-      app.preferences.setIntegerPreference('radius_script_first_launch_already_was', 6);
+      app.preferences.setIntegerPreference('corner_smoothing_script_first_launch_already_was', 6);
 
 
    } else {
@@ -190,27 +194,27 @@ function from_vars_to_prefs() {
 
    for (var i = 0; i < coefs.length; i++) {
       echo('set config ' + i + ': ' + coefs[i].name + ', ' + coefs[i].coef1 + ', ' + coefs[i].coef2);
-      app.preferences.setStringPreference('radius_script_config_' + i + '_name', coefs[i].name);
-      app.preferences.setRealPreference('radius_script_config_' + i + '_coef1', coefs[i].coef1);
-      app.preferences.setRealPreference('radius_script_config_' + i + '_coef2', coefs[i].coef2);
+      app.preferences.setStringPreference('corner_smoothing_script_config_' + i + '_name', coefs[i].name);
+      app.preferences.setRealPreference('corner_smoothing_script_config_' + i + '_coef1', coefs[i].coef1);
+      app.preferences.setRealPreference('corner_smoothing_script_config_' + i + '_coef2', coefs[i].coef2);
    }
 
    echo('set congifs_count to ' + coefs.length);
-   app.preferences.setIntegerPreference("radius_script_saved_congifs_count", coefs.length);
+   app.preferences.setIntegerPreference("corner_smoothing_script_saved_congifs_count", coefs.length);
 
    echo('set current coefs to ' + coef1 + ', ' + coef2);
 
-   app.preferences.setRealPreference('radius_script_current_coef1', coef1);
-   app.preferences.setRealPreference('radius_script_current_coef2', coef2);
+   app.preferences.setRealPreference('corner_smoothing_script_current_coef1', coef1);
+   app.preferences.setRealPreference('corner_smoothing_script_current_coef2', coef2);
 
 
    var uii = ui ? 6 : 2;
    echo('set ui to ' + uii);
-   app.preferences.setIntegerPreference('radius_script_show_ui', uii);
+   app.preferences.setIntegerPreference('corner_smoothing_script_show_ui', uii);
 
    var prof = show_profile ? 6 : 2;
    echo('set show_profile to ' + prof);
-   app.preferences.setIntegerPreference('radius_script_show_profile', prof);
+   app.preferences.setIntegerPreference('corner_smoothing_script_show_profile', prof);
 
 
 
@@ -223,14 +227,14 @@ function from_prefs_to_vars() {
    echo('from_prefs_to_vars');
 
    //how many presets are saved
-   var saved_congifs_count = app.preferences.getIntegerPreference('radius_script_saved_congifs_count');
+   var saved_congifs_count = app.preferences.getIntegerPreference('corner_smoothing_script_saved_congifs_count');
    echo(saved_congifs_count);
 
    //If it is unknown (although this is strange), then let it be 0
    if (saved_congifs_count == undefined || saved_congifs_count < 0 || saved_congifs_count > 10) {
-      echo('no radius_script_saved_congifs_count or invalid values, set 0');
+      echo('no corner_smoothing_script_saved_congifs_count or invalid values, set 0');
       saved_congifs_count = 0;
-      app.preferences.setIntegerPreference("radius_script_saved_congifs_count", 0);
+      app.preferences.setIntegerPreference("corner_smoothing_script_saved_congifs_count", 0);
    }
 
    //if such a variable is not saved in the Illustrator settings, it can give an absurdly large number instead of null or undefined, so cut it out
@@ -247,18 +251,18 @@ function from_prefs_to_vars() {
 
    for (var i = 0; i < saved_congifs_count; i++) {
       var conf = {};
-      conf.name = app.preferences.getStringPreference('radius_script_config_' + i + '_name');
-      conf.coef1 = app.preferences.getRealPreference('radius_script_config_' + i + '_coef1');
-      conf.coef2 = app.preferences.getRealPreference('radius_script_config_' + i + '_coef2');
+      conf.name = app.preferences.getStringPreference('corner_smoothing_script_config_' + i + '_name');
+      conf.coef1 = app.preferences.getRealPreference('corner_smoothing_script_config_' + i + '_coef1');
+      conf.coef2 = app.preferences.getRealPreference('corner_smoothing_script_config_' + i + '_coef2');
       echo('coef' + i + ': ' + conf.name + ', ' + conf.coef1 + ', ' + conf.coef2);
       coefs.push(conf);
    }
 
 
-   coef1 = app.preferences.getRealPreference('radius_script_current_coef1');
-   coef2 = app.preferences.getRealPreference('radius_script_current_coef2');
-   var s = app.preferences.getIntegerPreference('radius_script_show_ui');
-   var p = app.preferences.getIntegerPreference('radius_script_show_profile');
+   coef1 = app.preferences.getRealPreference('corner_smoothing_script_current_coef1');
+   coef2 = app.preferences.getRealPreference('corner_smoothing_script_current_coef2');
+   var s = app.preferences.getIntegerPreference('corner_smoothing_script_show_ui');
+   var p = app.preferences.getIntegerPreference('corner_smoothing_script_show_profile');
 
    echo(s);
    if (s == 6) {
@@ -293,24 +297,24 @@ function update_prefs_from_vars() {
 function clear_all_prefs() {
    echo('clear_all_prefs:');
 
-   var saved_congifs_count = app.preferences.getIntegerPreference('radius_script_saved_congifs_count');
+   var saved_congifs_count = app.preferences.getIntegerPreference('corner_smoothing_script_saved_congifs_count');
    echo(saved_congifs_count);
    echo(typeof saved_congifs_count);
 
    //If it is unknown (although this is strange), then let it be 0
    if (saved_congifs_count == undefined || saved_congifs_count < 0 || saved_congifs_count > 10) {
-      echo('no radius_script_saved_congifs_count, set 0');
+      echo('no corner_smoothing_script_saved_congifs_count, set 0');
       saved_congifs_count = 0;
    }
 
    for (var i = 0; i < saved_congifs_count; i++) {
       echo('removePreference ' + i);
-      app.preferences.removePreference('radius_script_config_' + i + '_name');
-      app.preferences.removePreference('radius_script_config_' + i + '_coef1');
-      app.preferences.removePreference('radius_script_config_' + i + '_coef2');
+      app.preferences.removePreference('corner_smoothing_script_config_' + i + '_name');
+      app.preferences.removePreference('corner_smoothing_script_config_' + i + '_coef1');
+      app.preferences.removePreference('corner_smoothing_script_config_' + i + '_coef2');
    }
-   echo('set radius_script_saved_congifs_count to 0');
-   app.preferences.setIntegerPreference("radius_script_saved_congifs_count", 0);
+   echo('set corner_smoothing_script_saved_congifs_count to 0');
+   app.preferences.setIntegerPreference("corner_smoothing_script_saved_congifs_count", 0);
 
 }
 
@@ -321,20 +325,20 @@ function factory_reset() {
 
    clear_all_prefs();
 
-   echo('removePreference radius_script_saved_congifs_count');
-   app.preferences.removePreference('radius_script_saved_congifs_count');
+   echo('removePreference corner_smoothing_script_saved_congifs_count');
+   app.preferences.removePreference('corner_smoothing_script_saved_congifs_count');
 
-   echo('removePreference radius_script_first_launch_already_was');
-   app.preferences.removePreference('radius_script_first_launch_already_was');
+   echo('removePreference corner_smoothing_script_first_launch_already_was');
+   app.preferences.removePreference('corner_smoothing_script_first_launch_already_was');
 
-   echo('removePreference radius_script_current_coef1');
-   echo('removePreference radius_script_current_coef2');
-   echo('removePreference radius_script_show_ui');
-   echo('removePreference radius_script_show_profile');
-   app.preferences.removePreference('radius_script_current_coef1');
-   app.preferences.removePreference('radius_script_current_coef2');
-   app.preferences.removePreference('radius_script_show_ui');
-   app.preferences.removePreference('radius_script_show_profile');
+   echo('removePreference corner_smoothing_script_current_coef1');
+   echo('removePreference corner_smoothing_script_current_coef2');
+   echo('removePreference corner_smoothing_script_show_ui');
+   echo('removePreference corner_smoothing_script_show_profile');
+   app.preferences.removePreference('corner_smoothing_script_current_coef1');
+   app.preferences.removePreference('corner_smoothing_script_current_coef2');
+   app.preferences.removePreference('corner_smoothing_script_show_ui');
+   app.preferences.removePreference('corner_smoothing_script_show_profile');
 }
 
 
@@ -672,14 +676,14 @@ function draw_evolute_for_path(opath) {
 
    //create a test layer, where the profile will be drawn, if it does not already exist
    try {
-      var l = doc.layers.getByName('radius_script_tmp_layer');
+      var l = doc.layers.getByName('corner_smoothing_script_tmp_layer');
    } catch (e) {
       var l = doc.layers.add();
-      l.name = 'radius_script_tmp_layer';
+      l.name = 'corner_smoothing_script_tmp_layer';
    }
 
 
-   var test_group = doc.layers.getByName('radius_script_tmp_layer').groupItems.add();
+   var test_group = doc.layers.getByName('corner_smoothing_script_tmp_layer').groupItems.add();
 
    test_group.opacity = 40;
 
@@ -866,7 +870,7 @@ function create_empty_curv_path(where, clsed) {
    if (where) {
       newPath = where.pathItems.add();
    } else {
-      newPath = doc.layers.getByName('radius_script_tmp_layer').pathItems.add();
+      newPath = doc.layers.getByName('corner_smoothing_script_tmp_layer').pathItems.add();
    }
 
 
@@ -1129,7 +1133,7 @@ function actionOK() {
 
    echo('actionOK');
 
-   doc.layers.getByName('radius_script_tmp_layer').remove();
+   doc.layers.getByName('corner_smoothing_script_tmp_layer').remove();
 
    settings.close();
 
@@ -1178,7 +1182,7 @@ function build_ui() {
    // DIALOG
    // ======
    var win = new Window("dialog", undefined, undefined, { minimizeButton: true });
-   win.text = loc({'en':"Radius", 'ru':"Радиус"});
+   win.text = loc({'en':"Round Corner Customization", 'ru':"Настройка скругления углов"});
    win.orientation = "row";
    win.alignChildren = ["left", "top"];
    win.spacing = 0;
@@ -1697,7 +1701,7 @@ function build_ui() {
 
       var prof = show_profile ? 6 : 2;
       echo('set show_profile to ' + prof);
-      app.preferences.setIntegerPreference('radius_script_show_profile', prof);
+      app.preferences.setIntegerPreference('corner_smoothing_script_show_profile', prof);
 
 
    };
@@ -1723,7 +1727,7 @@ function build_ui() {
 
       var uii = ui ? 6 : 2;
       echo('set ui to ' + uii);
-      app.preferences.setIntegerPreference('radius_script_show_ui', uii);
+      app.preferences.setIntegerPreference('corner_smoothing_script_show_ui', uii);
 
    };
 
@@ -1797,7 +1801,7 @@ function build_ui() {
 // Create a log file
 if (debug_mode) {
    //TODO: Windows support
-   var logFile = "~/Desktop/radius_log.txt";
+   var logFile = "~/Desktop/corner_smoothig_log.txt";
    var log_file = new File(logFile);
    log_file.open("w");
    log_file.encoding = 'UTF-8';
