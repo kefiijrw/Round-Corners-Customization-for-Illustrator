@@ -1,4 +1,4 @@
-/*! 
+﻿/*! 
  * Round Corners Customization v.0.1.0
  * https://github.com/kefiijrw/Round-Corners-Customization-for-Illustrator
  *
