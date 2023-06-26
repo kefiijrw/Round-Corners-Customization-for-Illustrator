@@ -1,11 +1,11 @@
-﻿/*! 
- * Round Corners Customization v.0.1.0
+/*! 
+ * Round Corners Customization v.0.1.1
  * https://github.com/kefiijrw/Round-Corners-Customization-for-Illustrator
  *
  * Author: Sergey Nikolaev
  * kefiijrw.com
  *
- * Date: 2022-10-12
+ * Date: 2023-06-26
  *
  * 
  * CHANGELOG:
@@ -29,6 +29,9 @@
  * v.0.1.0
  * Public release
  * The script file and the settings window title now have a more specific name.
+ * 
+ * v.0.1.1
+ * Isolation mode support
  * 
  */
 
@@ -64,6 +67,7 @@ var coefs = [];
 
 var coef1; //point offset 
 var coef2; //handle offset
+var tmp_layer;
 
 var selectedPointsSaved = [];
 
@@ -674,16 +678,41 @@ function draw_evolute_for_path(opath) {
    // var curv_graph_dots = [];
 
 
+
+   // var ss = doc.layers.getByName('Isolation Mode');
+   // alert(ss.name);
+
+   // var nn = ss.layers[0].layers.add();
+
    //create a test layer, where the profile will be drawn, if it does not already exist
    try {
-      var l = doc.layers.getByName('corner_smoothing_script_tmp_layer');
+      tmp_layer = doc.layers.getByName('corner_smoothing_script_tmp_layer');
    } catch (e) {
-      var l = doc.layers.add();
-      l.name = 'corner_smoothing_script_tmp_layer';
+
+      //if we can`t find tmp layer, trying to create it
+      try {
+         tmp_layer = doc.layers.add();   
+
+      }  catch (e) {
+         //if we can`t create tmp layer, we are most likely in isolation mode
+
+         try {
+            //isolation mode in layer
+            tmp_layer = doc.layers.getByName('Isolation Mode').layers[0].groupItems.add();
+         }  catch (e) {
+            //isolation mode in group
+            tmp_layer = doc.layers.getByName('Isolation Mode').groupItems[0].groupItems.add();
+         }
+
+
+      }
+
+      tmp_layer.name = 'corner_smoothing_script_tmp_layer';
    }
 
 
-   var test_group = doc.layers.getByName('corner_smoothing_script_tmp_layer').groupItems.add();
+
+   var test_group = tmp_layer.groupItems.add();
 
    test_group.opacity = 40;
 
@@ -870,7 +899,7 @@ function create_empty_curv_path(where, clsed) {
    if (where) {
       newPath = where.pathItems.add();
    } else {
-      newPath = doc.layers.getByName('corner_smoothing_script_tmp_layer').pathItems.add();
+      newPath = tmp_layer.pathItems.add();
    }
 
 
@@ -1133,7 +1162,7 @@ function actionOK() {
 
    echo('actionOK');
 
-   doc.layers.getByName('corner_smoothing_script_tmp_layer').remove();
+   tmp_layer.remove();
 
    settings.close();
 
