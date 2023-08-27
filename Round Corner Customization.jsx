@@ -1,11 +1,11 @@
 /*! 
- * Round Corners Customization v.0.1.1
+ * Round Corners Customization v.0.1.2
  * https://github.com/kefiijrw/Round-Corners-Customization-for-Illustrator
  *
  * Author: Sergey Nikolaev
  * kefiijrw.com
  *
- * Date: 2023-06-26
+ * Date: 2023-08-28
  *
  * 
  * CHANGELOG:
@@ -32,6 +32,9 @@
  * 
  * v.0.1.1
  * Isolation mode support
+ * 
+ * v.0.1.2
+ * Symbol editing mode support
  * 
  */
 
@@ -679,10 +682,8 @@ function draw_evolute_for_path(opath) {
 
 
 
-   // var ss = doc.layers.getByName('Isolation Mode');
-   // alert(ss.name);
+   // var ss = doc.layers.getByName('Symbol Editing Mode');
 
-   // var nn = ss.layers[0].layers.add();
 
    //create a test layer, where the profile will be drawn, if it does not already exist
    try {
@@ -694,14 +695,24 @@ function draw_evolute_for_path(opath) {
          tmp_layer = doc.layers.add();   
 
       }  catch (e) {
-         //if we can`t create tmp layer, we are most likely in isolation mode
+         //if we can`t create tmp layer, we are most likely in isolation mode or symbol editing mode
 
          try {
             //isolation mode in layer
             tmp_layer = doc.layers.getByName('Isolation Mode').layers[0].groupItems.add();
          }  catch (e) {
+
             //isolation mode in group
-            tmp_layer = doc.layers.getByName('Isolation Mode').groupItems[0].groupItems.add();
+            try {
+
+               tmp_layer = doc.layers.getByName('Isolation Mode').groupItems[0].groupItems.add();
+
+            }  catch (e) {
+               //symbol editing mode
+               tmp_layer = doc.layers.getByName('Symbol Editing Mode').layers[0].groupItems.add();
+
+            }
+
          }
 
 
