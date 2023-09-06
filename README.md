@@ -16,7 +16,7 @@ The script changes rude default rounding of corners — by simply inserting frag
 
 ![2021-09-19 06 31 36](https://user-images.githubusercontent.com/8041203/194973001-5afc521f-4249-46e7-8549-996e7be089de.gif)
 
-— Silent startup without a settings window to speed up work.
+— Silent startup without a settings window to speed up work. To bring back the options panel display, run the script with the *Shift key* pressed.
 
 
 ## How to use
