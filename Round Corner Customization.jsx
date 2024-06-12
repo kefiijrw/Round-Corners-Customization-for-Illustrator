@@ -1,11 +1,11 @@
-/*! 
- * Round Corners Customization v.0.1.3
+﻿/*! 
+ * Round Corners Customization v.0.1.4
  * https://github.com/kefiijrw/Round-Corners-Customization-for-Illustrator
  *
  * Author: Sergey Nikolaev
  * kefiijrw.com
  *
- * Date: 2023-09-04
+ * Date: 2024-06-12
  *
  * 
  * CHANGELOG:
@@ -38,6 +38,9 @@
  * 
  * v.0.1.3
  * Fixed Illustrator crashing when script runned with the "Show curvature profile" option disabled
+ * 
+ * v.0.1.4
+ * Fixed script encoding problem
  * 
  */
 
